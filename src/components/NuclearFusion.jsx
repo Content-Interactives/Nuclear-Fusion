@@ -196,6 +196,7 @@ const NuclearFusion = () => {
         useEffect(() => {
                 if (draggingAtom === null) return;
                 const move = (e) => {
+                        if (e.touches) e.preventDefault();
                         const clientX = e.touches ? e.touches[0].clientX : e.clientX;
                         const clientY = e.touches ? e.touches[0].clientY : e.clientY;
                         const { left, top } = clientToPercent(clientX, clientY);
@@ -224,11 +225,13 @@ const NuclearFusion = () => {
                 window.addEventListener('mouseup', up);
                 window.addEventListener('touchmove', move, { passive: false });
                 window.addEventListener('touchend', up);
+                window.addEventListener('touchcancel', up);
                 return () => {
                         window.removeEventListener('mousemove', move);
                         window.removeEventListener('mouseup', up);
                         window.removeEventListener('touchmove', move);
                         window.removeEventListener('touchend', up);
+                        window.removeEventListener('touchcancel', up);
                 };
         }, [draggingAtom]);
 
@@ -371,47 +374,69 @@ const NuclearFusion = () => {
                                                                 }}
                                                         />
                                                 </div>
-                                                {/* Two main draggable hydrogen atoms */}
+                                                {/* Two main draggable hydrogen atoms - wrapper gives 44px touch target */}
                                                 <div
                                                         key="main-1"
-                                                        className="absolute rounded-full z-20"
+                                                        className="absolute rounded-full z-20 flex items-center justify-center"
                                                         style={{
                                                                 left: `${mainAtom1Pos.left}%`,
                                                                 top: `${mainAtom1Pos.top}%`,
-                                                                width: 10,
-                                                                height: 10,
+                                                                width: 44,
+                                                                height: 44,
                                                                 transform: 'translate(-50%, -50%)',
-                                                                background: 'radial-gradient(circle at 35% 35%, #bbdefb, #64b5f6 40%, #42a5f5 70%, #1e88e5)',
-                                                                boxShadow: '0 0 8px 2px rgba(33, 150, 243, 0.4), inset -1px -1px 2px rgba(0,0,0,0.2)',
-                                                                animation: promptFaded
-                                                                        ? 'hydrogenFadeOutInFlash 0.5s ease-out forwards'
-                                                                        : `${HYDROGEN_FADE_ANIMATION}, hydrogenShake ${HYDROGEN_SHAKE_DURATION}s ease-in-out ${7800}ms infinite`,
                                                                 transition: `left ${SNAP_BACK_DURATION_MS}ms ease-out, top ${SNAP_BACK_DURATION_MS}ms ease-out`,
-                                                                ...(showFusionText && !promptFaded && { cursor: draggingAtom === 1 ? 'grabbing' : 'grab', pointerEvents: 'auto' }),
+                                                                ...(showFusionText && !promptFaded
+                                                                        ? { cursor: draggingAtom === 1 ? 'grabbing' : 'grab', pointerEvents: 'auto', touchAction: 'none' }
+                                                                        : { pointerEvents: 'none' }),
                                                         }}
                                                         onMouseDown={showFusionText && !promptFaded ? (e) => handleAtomPointerDown(1, e) : undefined}
                                                         onTouchStart={showFusionText && !promptFaded ? (e) => handleAtomPointerDown(1, e) : undefined}
-                                                />
+                                                >
+                                                        <div
+                                                                className="absolute left-1/2 top-1/2 rounded-full pointer-events-none"
+                                                                style={{
+                                                                        width: 10,
+                                                                        height: 10,
+                                                                        transform: 'translate(-50%, -50%)',
+                                                                        background: 'radial-gradient(circle at 35% 35%, #bbdefb, #64b5f6 40%, #42a5f5 70%, #1e88e5)',
+                                                                        boxShadow: '0 0 8px 2px rgba(33, 150, 243, 0.4), inset -1px -1px 2px rgba(0,0,0,0.2)',
+                                                                        animation: promptFaded
+                                                                                ? 'hydrogenFadeOutInFlash 0.5s ease-out forwards'
+                                                                                : `${HYDROGEN_FADE_ANIMATION}, hydrogenShake ${HYDROGEN_SHAKE_DURATION}s ease-in-out ${7800}ms infinite`,
+                                                                }}
+                                                        />
+                                                </div>
                                                 <div
                                                         key="main-2"
-                                                        className="absolute rounded-full z-20"
+                                                        className="absolute rounded-full z-20 flex items-center justify-center"
                                                         style={{
                                                                 left: `${mainAtom2Pos.left}%`,
                                                                 top: `${mainAtom2Pos.top}%`,
-                                                                width: 10,
-                                                                height: 10,
+                                                                width: 44,
+                                                                height: 44,
                                                                 transform: 'translate(-50%, -50%)',
-                                                                background: 'radial-gradient(circle at 35% 35%, #bbdefb, #64b5f6 40%, #42a5f5 70%, #1e88e5)',
-                                                                boxShadow: '0 0 8px 2px rgba(33, 150, 243, 0.4), inset -1px -1px 2px rgba(0,0,0,0.2)',
-                                                                animation: promptFaded
-                                                                        ? 'hydrogenFadeOutInFlash 0.5s ease-out forwards'
-                                                                        : `${HYDROGEN_FADE_ANIMATION}, hydrogenShake ${HYDROGEN_SHAKE_DURATION}s ease-in-out ${7800 + HYDROGEN_SHAKE_STAGGER_MS}ms infinite`,
                                                                 transition: `left ${SNAP_BACK_DURATION_MS}ms ease-out, top ${SNAP_BACK_DURATION_MS}ms ease-out`,
-                                                                ...(showFusionText && !promptFaded && { cursor: draggingAtom === 2 ? 'grabbing' : 'grab', pointerEvents: 'auto' }),
+                                                                ...(showFusionText && !promptFaded
+                                                                        ? { cursor: draggingAtom === 2 ? 'grabbing' : 'grab', pointerEvents: 'auto', touchAction: 'none' }
+                                                                        : { pointerEvents: 'none' }),
                                                         }}
                                                         onMouseDown={showFusionText && !promptFaded ? (e) => handleAtomPointerDown(2, e) : undefined}
                                                         onTouchStart={showFusionText && !promptFaded ? (e) => handleAtomPointerDown(2, e) : undefined}
-                                                />
+                                                >
+                                                        <div
+                                                                className="absolute left-1/2 top-1/2 rounded-full pointer-events-none"
+                                                                style={{
+                                                                        width: 10,
+                                                                        height: 10,
+                                                                        transform: 'translate(-50%, -50%)',
+                                                                        background: 'radial-gradient(circle at 35% 35%, #bbdefb, #64b5f6 40%, #42a5f5 70%, #1e88e5)',
+                                                                        boxShadow: '0 0 8px 2px rgba(33, 150, 243, 0.4), inset -1px -1px 2px rgba(0,0,0,0.2)',
+                                                                        animation: promptFaded
+                                                                                ? 'hydrogenFadeOutInFlash 0.5s ease-out forwards'
+                                                                                : `${HYDROGEN_FADE_ANIMATION}, hydrogenShake ${HYDROGEN_SHAKE_DURATION}s ease-in-out ${7800 + HYDROGEN_SHAKE_STAGGER_MS}ms infinite`,
+                                                                }}
+                                                        />
+                                                </div>
                                                 {promptFaded && (
                                                         <>
                                                                 <div
