@@ -30,6 +30,33 @@
     }
 }
 
+@keyframes sunZoomOutAnimation {
+    from {
+        transform: scale(8);
+    }
+    to {
+        transform: scale(1);
+    }
+}
+
+@keyframes sunUnflattenAnimation {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+@keyframes sunHighlightReturnAnimation {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 0.15;
+    }
+}
+
 @keyframes sunHighlightFadeAnimation {
     from {
         opacity: 1;
@@ -51,6 +78,83 @@
     }
     75% {
         transform: translate(-50%, -50%) translate(-0.7px, -0.6px);
+    }
+}
+
+@keyframes cameraZoomInPhase2 {
+    from {
+        transform: scale(1);
+    }
+    to {
+        transform: scale(1.85);
+    }
+}
+
+@keyframes sunFlattenAnimation {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes sunHighlightFadeOutAnimation {
+    from {
+        opacity: 0.15;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+@keyframes fusionFlashAnimation {
+    0% {
+        transform: translate(-50%, -50%) scale(0.1);
+        opacity: 1;
+    }
+    40% {
+        opacity: 0.7;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(2.5);
+        opacity: 0;
+    }
+}
+
+@keyframes hydrogenFadeOutInFlash {
+    to {
+        opacity: 0;
+    }
+}
+
+@keyframes heliumFadeInAnimation {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.5);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+/* Camera zoom out and gradient return (after helium appears) */
+@keyframes cameraZoomOutPhase2 {
+    from {
+        transform: scale(1.85);
+    }
+    to {
+        transform: scale(1);
+    }
+}
+
+@keyframes cameraZoomOutPhase3 {
+    from {
+        transform: scale(1);
+    }
+    to {
+        transform: scale(1);
     }
 }
 
