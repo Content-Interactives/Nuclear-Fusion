@@ -21,6 +21,39 @@
     }
 }
 
+@keyframes sunZoomInAnimation {
+    from {
+        transform: scale(1);
+    }
+    to {
+        transform: scale(8);
+    }
+}
+
+@keyframes sunHighlightFadeAnimation {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0.15;
+    }
+}
+
+@keyframes hydrogenShake {
+    0%, 100% {
+        transform: translate(-50%, -50%) translate(0, 0);
+    }
+    25% {
+        transform: translate(-50%, -50%) translate(0.8px, -0.4px);
+    }
+    50% {
+        transform: translate(-50%, -50%) translate(-0.5px, 0.7px);
+    }
+    75% {
+        transform: translate(-50%, -50%) translate(-0.7px, -0.6px);
+    }
+}
+
 /* Animation Classes */
 .shrink-out-animation {
     animation: shrinkOutAnimation 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
